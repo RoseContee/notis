@@ -1,0 +1,878 @@
+@extends('layouts.front')
+@section('content')
+    <div class="flq-swiper-wrapper flq-background">
+        <div class="
+      flq-background-overlay
+      py-6
+      d-flex
+      align-items-end align-items-md-center
+      z-index-2
+    ">
+            <div class="
+        container
+        d-flex
+        justify-content-center justify-content-md-end
+        flq-pe-none
+      ">
+                <div class="
+          flq-swiper-pagination
+          flq-swiper-pagination-horizontal
+          flq-swiper-pagination-md-vertical
+          flq-pe-initial
+        "></div>
+            </div>
+        </div>
+        <div class="swiper flq-swiper-main" data-parallax=true data-auto-height=true data-speed=600 data-pagination=true data-autoplay='5000'>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    @foreach($movies as $movie)
+                        @if($movie->top_scroll == 1)
+                    <div class="swiper-slide flq-background">
+                        <div class="flq-background-image">
+                                <span class="flq-image swiper-image" data-speed=0.7 data-swiper-parallax-x=40%>
+                                    <img src="{{$movie->getFirstMediaUrl('top_scroll_poster')}}" alt="">
+                                </span>
+                        </div>
+                        <div class="flq-background-overlay" style="background-color: hsla(var(--flq-color-black), 0.7)"></div>
+                        <div class="container py-7 min-vh-100 d-flex align-items-center">
+                            <div class="row" style="width: 100%;">
+                                <div class="
+            col-12 col-md-10 col-lg-8 col-xl-6
+            pt-navbar
+            flq-vertical-rhythm
+          ">
+                                    @foreach($movie->genres as $genre)
+                                        <div class="flq-subtitle badge badge-white badge-glass badge-translucent" data-animejs> {{$genre->name}} </div>
+                                    @endforeach
+                                    <h2 class="display-5 mb-0" data-animejs>{{$movie->title}}</h2>
+                                        <div class="flq-meta flq-color-opacity mt-3">
+                                            <ul class="gx-4">
+                                                {{--                                                <li data-animejs>--}}
+                                                {{--                                                    <svg width="43" height="22" viewBox="0 0 43 22" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+                                                {{--                                                        <path d="M43 1.89083C42.8833 0.922265 42.1751 0.150295 41.2733 0C37.3203 0 5.69694 0 1.74393 0C0.756052 0.164717 0 1.07484 0 2.17169C0 3.935 0 18.0384 0 19.801C0 21.0155 0.925061 22 2.06699 22C5.95494 22 37.0623 22 40.9502 22C42.0017 22 42.8699 21.1643 43 20.0826C43 16.4444 43 3.70955 43 1.89083Z" fill="#F6C700" />--}}
+                                                {{--                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M34.2105 15.7931C34.4184 15.7931 34.6936 15.7074 34.7565 15.5381C34.7983 15.425 34.8297 15.0174 34.8514 14.3152V10.8987C34.8514 10.3347 34.8155 9.96654 34.7445 9.79423C34.6727 9.62193 34.3938 9.53615 34.1859 9.53615C33.9825 9.53615 33.8508 9.61206 33.791 9.76159C33.7304 9.91265 33.7005 10.2914 33.7005 10.8987V14.4223C33.7005 15.0083 33.7342 15.3825 33.803 15.5464C33.8718 15.7112 34.0071 15.7931 34.2105 15.7931ZM33.4852 17.5504H30.4131V4.21738H33.7005V8.55468C33.9727 8.23511 34.2764 7.99676 34.6106 7.83964C34.9457 7.68251 35.4482 7.60281 35.8408 7.60281C36.2925 7.60281 36.6844 7.67416 37.0164 7.81687C37.3484 7.95957 37.6019 8.1592 37.7762 8.41653C37.9504 8.67385 38.0551 8.9251 38.0903 9.1718C38.1254 9.4185 38.1434 9.94377 38.1434 10.7484V14.4891C38.1434 15.2891 38.0903 15.8842 37.9841 16.2759C37.8779 16.6668 37.6281 17.0069 37.2363 17.2938C36.8436 17.5815 36.3785 17.725 35.8393 17.725C35.4519 17.725 34.9516 17.6399 34.6174 17.4691C34.2816 17.2991 33.9757 17.0426 33.6975 16.701C33.6953 16.7098 33.6918 16.724 33.6869 16.7436C33.6602 16.8508 33.5933 17.1197 33.4852 17.5504ZM14.911 9.62588L15.0461 10.5624L15.8366 4.3335H20.2944V17.6665H17.315L17.3038 8.667L16.111 17.6665H13.982L12.7241 8.86284L12.7137 17.6665H9.72461V4.3335H14.1487C14.2789 5.14114 14.415 6.0877 14.5578 7.17544C14.5846 7.36349 14.7025 8.1806 14.911 9.62588ZM8.59885 4.42081H5.18652V17.7538H8.59885V4.42081ZM25.9279 7.10712C25.9653 7.27715 25.9847 7.66276 25.9847 8.26546V13.4347C25.9847 14.322 25.9279 14.8655 25.815 15.0659C25.7013 15.2663 25.3992 15.3658 24.9093 15.3658V6.61373C25.281 6.61373 25.5345 6.65396 25.6691 6.7329C25.8037 6.8126 25.8905 6.93709 25.9279 7.10712ZM27.4691 17.5306C27.8752 17.4403 28.2162 17.2809 28.4929 17.0539C28.7689 16.8262 28.9626 16.5112 29.0732 16.1081C29.1847 15.7058 29.2505 14.9065 29.2505 13.711V9.02908C29.2505 7.76751 29.2019 6.92191 29.1263 6.49228C29.0501 6.06189 28.8609 5.67097 28.558 5.32028C28.2544 4.96959 27.8117 4.71758 27.2298 4.56425C26.6473 4.41092 25.6975 4.3335 24.0456 4.3335H21.5V17.6665H25.634C26.5867 17.6361 27.1984 17.5913 27.4691 17.5306Z" fill="black" />--}}
+                                                {{--                                                    </svg>--}}
+                                                {{--                                                    <strong class="ms-1 flq-color-title">8.4</strong>--}}
+                                                {{--                                                </li>--}}
+                                                <li data-animejs>
+                                                    <a href="#">{{$movie->year}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    <p class="lead" data-animejs> {{$movie->description}} </p>
+{{--                                    <div>--}}
+{{--                                        <div class="row gy-1">--}}
+{{--                                            <div class="col-auto" data-animejs>--}}
+{{--                                                <a href="single-actor.html" class="btn btn-link">Arline Kelley</a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-auto" data-animejs>--}}
+{{--                                                <a href="single-actor.html" class="btn btn-link">Julius Barnett</a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-auto" data-animejs>--}}
+{{--                                                <a href="single-actor.html" class="btn btn-link">Anthony Lindsey</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+                                    <div class="py-1">
+                                        <div class="row gy-4 align-items-center">
+                                            <div class="col-auto" data-animejs>
+                                                <a href="{{route('watch_movie', $movie->id)}}" class="btn btn-icon-sm">
+                                                    <span class="btn-name">Watch Now</span>
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M8 19L19 12L8 5V19Z" fill="currentColor" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <div class="col-auto" data-animejs>
+                                                <a href="{{route('movie', $movie->id)}}" class="btn btn-link">More Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="badge badge-white badge-translucent badge-glass flq-color-title" data-animejs>18+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        @endif
+                    @endforeach
+                    @foreach($shows as $show)
+                        @if($show->top_scroll == 1)
+                            <div class="swiper-slide flq-background">
+                                <div class="flq-background-image">
+                            <span class="flq-image swiper-image" data-speed=0.7 data-swiper-parallax-x=40%>
+                                <img src="{{$show->getFirstMediaUrl('top_scroll_poster')}}" alt="">
+                            </span>
+                                </div>
+                                <div class="flq-background-overlay" style="background-color: hsla(var(--flq-color-black), 0.7)"></div>
+                                <div class="container py-7 min-vh-100 d-flex align-items-center">
+                                    <div class="row" style="width: 100%;">
+                                        <div class="
+        col-12 col-md-10 col-lg-8 col-xl-6
+        pt-navbar
+        flq-vertical-rhythm
+      ">
+                                            @foreach($show->genres as $genre)
+                                                <div class="flq-subtitle badge badge-white badge-glass badge-translucent" data-animejs> {{$genre->name}} </div>
+                                            @endforeach
+                                            <h2 class="display-5 mb-0" data-animejs>{{$show->title}}</h2>
+                                            <div class="flq-meta flq-color-opacity mt-3">
+                                                <ul class="gx-4">
+                                                    {{--                                                <li data-animejs>--}}
+                                                    {{--                                                    <svg width="43" height="22" viewBox="0 0 43 22" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+                                                    {{--                                                        <path d="M43 1.89083C42.8833 0.922265 42.1751 0.150295 41.2733 0C37.3203 0 5.69694 0 1.74393 0C0.756052 0.164717 0 1.07484 0 2.17169C0 3.935 0 18.0384 0 19.801C0 21.0155 0.925061 22 2.06699 22C5.95494 22 37.0623 22 40.9502 22C42.0017 22 42.8699 21.1643 43 20.0826C43 16.4444 43 3.70955 43 1.89083Z" fill="#F6C700" />--}}
+                                                    {{--                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M34.2105 15.7931C34.4184 15.7931 34.6936 15.7074 34.7565 15.5381C34.7983 15.425 34.8297 15.0174 34.8514 14.3152V10.8987C34.8514 10.3347 34.8155 9.96654 34.7445 9.79423C34.6727 9.62193 34.3938 9.53615 34.1859 9.53615C33.9825 9.53615 33.8508 9.61206 33.791 9.76159C33.7304 9.91265 33.7005 10.2914 33.7005 10.8987V14.4223C33.7005 15.0083 33.7342 15.3825 33.803 15.5464C33.8718 15.7112 34.0071 15.7931 34.2105 15.7931ZM33.4852 17.5504H30.4131V4.21738H33.7005V8.55468C33.9727 8.23511 34.2764 7.99676 34.6106 7.83964C34.9457 7.68251 35.4482 7.60281 35.8408 7.60281C36.2925 7.60281 36.6844 7.67416 37.0164 7.81687C37.3484 7.95957 37.6019 8.1592 37.7762 8.41653C37.9504 8.67385 38.0551 8.9251 38.0903 9.1718C38.1254 9.4185 38.1434 9.94377 38.1434 10.7484V14.4891C38.1434 15.2891 38.0903 15.8842 37.9841 16.2759C37.8779 16.6668 37.6281 17.0069 37.2363 17.2938C36.8436 17.5815 36.3785 17.725 35.8393 17.725C35.4519 17.725 34.9516 17.6399 34.6174 17.4691C34.2816 17.2991 33.9757 17.0426 33.6975 16.701C33.6953 16.7098 33.6918 16.724 33.6869 16.7436C33.6602 16.8508 33.5933 17.1197 33.4852 17.5504ZM14.911 9.62588L15.0461 10.5624L15.8366 4.3335H20.2944V17.6665H17.315L17.3038 8.667L16.111 17.6665H13.982L12.7241 8.86284L12.7137 17.6665H9.72461V4.3335H14.1487C14.2789 5.14114 14.415 6.0877 14.5578 7.17544C14.5846 7.36349 14.7025 8.1806 14.911 9.62588ZM8.59885 4.42081H5.18652V17.7538H8.59885V4.42081ZM25.9279 7.10712C25.9653 7.27715 25.9847 7.66276 25.9847 8.26546V13.4347C25.9847 14.322 25.9279 14.8655 25.815 15.0659C25.7013 15.2663 25.3992 15.3658 24.9093 15.3658V6.61373C25.281 6.61373 25.5345 6.65396 25.6691 6.7329C25.8037 6.8126 25.8905 6.93709 25.9279 7.10712ZM27.4691 17.5306C27.8752 17.4403 28.2162 17.2809 28.4929 17.0539C28.7689 16.8262 28.9626 16.5112 29.0732 16.1081C29.1847 15.7058 29.2505 14.9065 29.2505 13.711V9.02908C29.2505 7.76751 29.2019 6.92191 29.1263 6.49228C29.0501 6.06189 28.8609 5.67097 28.558 5.32028C28.2544 4.96959 27.8117 4.71758 27.2298 4.56425C26.6473 4.41092 25.6975 4.3335 24.0456 4.3335H21.5V17.6665H25.634C26.5867 17.6361 27.1984 17.5913 27.4691 17.5306Z" fill="black" />--}}
+                                                    {{--                                                    </svg>--}}
+                                                    {{--                                                    <strong class="ms-1 flq-color-title">8.4</strong>--}}
+                                                    {{--                                                </li>--}}
+                                                    <li data-animejs>
+                                                        <a href="#">{{$show->year}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <p class="lead" data-animejs> {{$show->description}} </p>
+                                            {{--                                    <div>--}}
+                                            {{--                                        <div class="row gy-1">--}}
+                                            {{--                                            <div class="col-auto" data-animejs>--}}
+                                            {{--                                                <a href="single-actor.html" class="btn btn-link">Arline Kelley</a>--}}
+                                            {{--                                            </div>--}}
+                                            {{--                                            <div class="col-auto" data-animejs>--}}
+                                            {{--                                                <a href="single-actor.html" class="btn btn-link">Julius Barnett</a>--}}
+                                            {{--                                            </div>--}}
+                                            {{--                                            <div class="col-auto" data-animejs>--}}
+                                            {{--                                                <a href="single-actor.html" class="btn btn-link">Anthony Lindsey</a>--}}
+                                            {{--                                            </div>--}}
+                                            {{--                                        </div>--}}
+                                            {{--                                    </div>--}}
+                                            <div class="py-1">
+                                                <div class="row gy-4 align-items-center">
+                                                    <div class="col-auto" data-animejs>
+                                                        <a href="{{route('show', $show->id)}}" class="btn btn-icon-sm">
+                                                            <span class="btn-name">Watch Now</span>
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M8 19L19 12L8 5V19Z" fill="currentColor" />
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-auto" data-animejs>
+                                                        <a href="{{route('show', $show->id)}}" class="btn btn-link">More Details</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="badge badge-white badge-translucent badge-glass flq-color-title" data-animejs>18+</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="content-wrap">
+    <div class="flq-swiper-wrapper my-7" data-sr="new-releases" data-sr-interval="100" data-sr-duration="1000" data-sr-distance="10">
+        <div class="container mb-5" data-sr-item="new-releases">
+            <h2>New Releases</h2>
+        </div>
+        <div class="swiper flq-swiper-effect-touch" data-sr-item=new-releases data-buttons=true data-pagination-custom=true data-gap=30 data-speed=800 data-touch-ratio=0.8 data-slides=1, data-breakpoints=636:2,1072:3,1280:4>
+            <div class="swiper-container container">
+                <div class="swiper-wrapper">
+                    @foreach($movies as $movie)
+                        @if($movie->new_release == 1)
+                            <div class="swiper-slide">
+                                <div class="card flq-card-blog">
+                                    <div class="card-img-wrap">
+                                        <a href="{{route('movie', $movie->id)}}">
+                                                    <span class="flq-image flq-rounded-xl flq-responsive flq-responsive-sm-3x4">
+                                                        <img src="{{$movie->getFirstMediaUrl('thumbnail')}}" alt="">
+                                                    </span>
+                                            {{--                                            <span class="card-badge badge badge-dark badge-glass flq-color-white">8.4</span>--}}
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="{{route('movie', $movie->id)}}">{{$movie->title}}</a></h5>
+                                        <div class="flq-meta flq-meta-sm">
+                                            <ul>
+                                                <li>
+                                                    <a href="" class="card-year">{{$movie->year}}</a>
+                                                </li>
+                                                @foreach($movie->genres as $genre)
+                                                    <li>
+                                                        <a href="#" class="card-category">{{$genre->name}}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row align-items-center justify-content-between gx-5">
+                <div class="col-auto" data-sr-item="new-releases">
+                    <div class="flq-swiper-pagination-custom"></div>
+                </div>
+                <div class="col d-none d-sm-block" data-sr-item="new-releases">
+                    <hr />
+                </div>
+                <div class="col-auto" data-sr-item="new-releases">
+                    <div class="
+            flq-swiper-button-prev
+            btn btn-sm btn-dark btn-active btn-square btn-icon-sm
+            me-1
+          " data-sr-item="related">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="
+            flq-swiper-button-next
+            btn btn-sm btn-dark btn-active btn-square btn-icon-sm
+          " data-sr-item="related">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container flq-swiper-wrapper mb-7" data-sr="upcoming-movies" data-sr-interval="100" data-sr-duration="1000" data-sr-distance="10">
+        <h2 class="mb-5" data-sr-item="upcoming-movies">Featured</h2>
+        <div class="swiper flq-swiper-effect-touch mb-5" data-sr-item=upcoming-movies data-buttons=true data-pagination-progress=true data-gap=30 data-speed=800 data-touch-ratio=0.8 data-breakpoints=656:1,1072:2>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    @foreach($movies as $movie)
+                        @if($movie->upcoming == 1)
+                            <div class="swiper-slide">
+                                <a href="{{route('movie', $movie->id)}}" class="card flq-card-movie flq-color-opacity">
+                                    <span class="card-img-wrap">
+                                        <span class="flq-image flq-responsive flq-responsive-lg-1x1 flq-responsive-xl-16x9">
+                                            <img src="{{$movie->getFirstMediaUrl('thumbnail')}}" alt="">
+                                        </span>
+                                    </span>
+                                    <span class="card-body">
+{{--                                        <span class="card-badge">--}}
+                                        {{--                                            <svg width="43" height="22" viewBox="0 0 43 22" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+                                        {{--                                                <path d="M43 1.89083C42.8833 0.922265 42.1751 0.150295 41.2733 0C37.3203 0 5.69694 0 1.74393 0C0.756052 0.164717 0 1.07484 0 2.17169C0 3.935 0 18.0384 0 19.801C0 21.0155 0.925061 22 2.06699 22C5.95494 22 37.0623 22 40.9502 22C42.0017 22 42.8699 21.1643 43 20.0826C43 16.4444 43 3.70955 43 1.89083Z" fill="#F6C700" />--}}
+                                        {{--                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M34.2105 15.7931C34.4184 15.7931 34.6936 15.7074 34.7565 15.5381C34.7983 15.425 34.8297 15.0174 34.8514 14.3152V10.8987C34.8514 10.3347 34.8155 9.96654 34.7445 9.79423C34.6727 9.62193 34.3938 9.53615 34.1859 9.53615C33.9825 9.53615 33.8508 9.61206 33.791 9.76159C33.7304 9.91265 33.7005 10.2914 33.7005 10.8987V14.4223C33.7005 15.0083 33.7342 15.3825 33.803 15.5464C33.8718 15.7112 34.0071 15.7931 34.2105 15.7931ZM33.4852 17.5504H30.4131V4.21738H33.7005V8.55468C33.9727 8.23511 34.2764 7.99676 34.6106 7.83964C34.9457 7.68251 35.4482 7.60281 35.8408 7.60281C36.2925 7.60281 36.6844 7.67416 37.0164 7.81687C37.3484 7.95957 37.6019 8.1592 37.7762 8.41653C37.9504 8.67385 38.0551 8.9251 38.0903 9.1718C38.1254 9.4185 38.1434 9.94377 38.1434 10.7484V14.4891C38.1434 15.2891 38.0903 15.8842 37.9841 16.2759C37.8779 16.6668 37.6281 17.0069 37.2363 17.2938C36.8436 17.5815 36.3785 17.725 35.8393 17.725C35.4519 17.725 34.9516 17.6399 34.6174 17.4691C34.2816 17.2991 33.9757 17.0426 33.6975 16.701C33.6953 16.7098 33.6918 16.724 33.6869 16.7436C33.6602 16.8508 33.5933 17.1197 33.4852 17.5504ZM14.911 9.62588L15.0461 10.5624L15.8366 4.3335H20.2944V17.6665H17.315L17.3038 8.667L16.111 17.6665H13.982L12.7241 8.86284L12.7137 17.6665H9.72461V4.3335H14.1487C14.2789 5.14114 14.415 6.0877 14.5578 7.17544C14.5846 7.36349 14.7025 8.1806 14.911 9.62588ZM8.59885 4.42081H5.18652V17.7538H8.59885V4.42081ZM25.9279 7.10712C25.9653 7.27715 25.9847 7.66276 25.9847 8.26546V13.4347C25.9847 14.322 25.9279 14.8655 25.815 15.0659C25.7013 15.2663 25.3992 15.3658 24.9093 15.3658V6.61373C25.281 6.61373 25.5345 6.65396 25.6691 6.7329C25.8037 6.8126 25.8905 6.93709 25.9279 7.10712ZM27.4691 17.5306C27.8752 17.4403 28.2162 17.2809 28.4929 17.0539C28.7689 16.8262 28.9626 16.5112 29.0732 16.1081C29.1847 15.7058 29.2505 14.9065 29.2505 13.711V9.02908C29.2505 7.76751 29.2019 6.92191 29.1263 6.49228C29.0501 6.06189 28.8609 5.67097 28.558 5.32028C28.2544 4.96959 27.8117 4.71758 27.2298 4.56425C26.6473 4.41092 25.6975 4.3335 24.0456 4.3335H21.5V17.6665H25.634C26.5867 17.6361 27.1984 17.5913 27.4691 17.5306Z" fill="black" />--}}
+                                        {{--                                            </svg> 7.1</span>--}}
+                                        <span class="card-title h5">{{$movie->title}}</span>
+                                        <span class="card-description">
+                                            <span>{{$movie->description}}</span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between gy-4 gx-5">
+            <div class="col-12 col-sm-6 order-sm-2" data-sr-item="upcoming-movies">
+                <div class="swiper-pagination flq-swiper-pagination-progress"></div>
+            </div>
+            <div class="col-auto order-sm-1" data-sr-item="upcoming-movies">
+                <div class="flq-swiper-pagination-custom"></div>
+            </div>
+            <div class="col-auto order-sm-3" data-sr-item="upcoming-movies">
+                <div class="
+          flq-swiper-button-prev
+          btn btn-sm btn-square btn-dark btn-active btn-icon-sm
+          me-1
+        " data-sr-item="related">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="
+          flq-swiper-button-next
+          btn btn-sm btn-square btn-dark btn-active btn-icon-sm
+        " data-sr-item="related">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--    <div class="py-7" style="background-image: linear-gradient(90deg, #e6aa9d 0%, #be5d6c 100%)" data-sr="movie" data-sr-interval="80" data-sr-duration="1000" data-sr-distance="10">--}}
+    {{--        <div class="container">--}}
+    {{--            <div class="row align-items-center g-6">--}}
+    {{--                <div class="col-12 col-lg-5 flq-vertical-rhythm">--}}
+    {{--                            <span class="--}}
+    {{--            flq-subtitle--}}
+    {{--            badge badge-white badge-translucent--}}
+    {{--            flq-color-opacity--}}
+    {{--          " data-sr-item="movie">Documentary</span>--}}
+    {{--                    <h2 class="mb-0" data-sr-item="movie">Unbounded</h2>--}}
+    {{--                    <div class="flq-meta flq-color-opacity mt-2">--}}
+    {{--                        <ul class="gx-4">--}}
+    {{--                            <li data-sr-item="movie">--}}
+    {{--                                <svg width="43" height="22" viewBox="0 0 43 22" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+    {{--                                    <path d="M43 1.89083C42.8833 0.922265 42.1751 0.150295 41.2733 0C37.3203 0 5.69694 0 1.74393 0C0.756052 0.164717 0 1.07484 0 2.17169C0 3.935 0 18.0384 0 19.801C0 21.0155 0.925061 22 2.06699 22C5.95494 22 37.0623 22 40.9502 22C42.0017 22 42.8699 21.1643 43 20.0826C43 16.4444 43 3.70955 43 1.89083Z" fill="#F6C700" />--}}
+    {{--                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M34.2105 15.7931C34.4184 15.7931 34.6936 15.7074 34.7565 15.5381C34.7983 15.425 34.8297 15.0174 34.8514 14.3152V10.8987C34.8514 10.3347 34.8155 9.96654 34.7445 9.79423C34.6727 9.62193 34.3938 9.53615 34.1859 9.53615C33.9825 9.53615 33.8508 9.61206 33.791 9.76159C33.7304 9.91265 33.7005 10.2914 33.7005 10.8987V14.4223C33.7005 15.0083 33.7342 15.3825 33.803 15.5464C33.8718 15.7112 34.0071 15.7931 34.2105 15.7931ZM33.4852 17.5504H30.4131V4.21738H33.7005V8.55468C33.9727 8.23511 34.2764 7.99676 34.6106 7.83964C34.9457 7.68251 35.4482 7.60281 35.8408 7.60281C36.2925 7.60281 36.6844 7.67416 37.0164 7.81687C37.3484 7.95957 37.6019 8.1592 37.7762 8.41653C37.9504 8.67385 38.0551 8.9251 38.0903 9.1718C38.1254 9.4185 38.1434 9.94377 38.1434 10.7484V14.4891C38.1434 15.2891 38.0903 15.8842 37.9841 16.2759C37.8779 16.6668 37.6281 17.0069 37.2363 17.2938C36.8436 17.5815 36.3785 17.725 35.8393 17.725C35.4519 17.725 34.9516 17.6399 34.6174 17.4691C34.2816 17.2991 33.9757 17.0426 33.6975 16.701C33.6953 16.7098 33.6918 16.724 33.6869 16.7436C33.6602 16.8508 33.5933 17.1197 33.4852 17.5504ZM14.911 9.62588L15.0461 10.5624L15.8366 4.3335H20.2944V17.6665H17.315L17.3038 8.667L16.111 17.6665H13.982L12.7241 8.86284L12.7137 17.6665H9.72461V4.3335H14.1487C14.2789 5.14114 14.415 6.0877 14.5578 7.17544C14.5846 7.36349 14.7025 8.1806 14.911 9.62588ZM8.59885 4.42081H5.18652V17.7538H8.59885V4.42081ZM25.9279 7.10712C25.9653 7.27715 25.9847 7.66276 25.9847 8.26546V13.4347C25.9847 14.322 25.9279 14.8655 25.815 15.0659C25.7013 15.2663 25.3992 15.3658 24.9093 15.3658V6.61373C25.281 6.61373 25.5345 6.65396 25.6691 6.7329C25.8037 6.8126 25.8905 6.93709 25.9279 7.10712ZM27.4691 17.5306C27.8752 17.4403 28.2162 17.2809 28.4929 17.0539C28.7689 16.8262 28.9626 16.5112 29.0732 16.1081C29.1847 15.7058 29.2505 14.9065 29.2505 13.711V9.02908C29.2505 7.76751 29.2019 6.92191 29.1263 6.49228C29.0501 6.06189 28.8609 5.67097 28.558 5.32028C28.2544 4.96959 27.8117 4.71758 27.2298 4.56425C26.6473 4.41092 25.6975 4.3335 24.0456 4.3335H21.5V17.6665H25.634C26.5867 17.6361 27.1984 17.5913 27.4691 17.5306Z" fill="black" />--}}
+    {{--                                </svg>--}}
+    {{--                                <strong class="ms-1 flq-color-title">7.1</strong>--}}
+    {{--                            </li>--}}
+    {{--                            <li data-sr-item="movie">--}}
+    {{--                                <a href="#">2021</a>--}}
+    {{--                            </li>--}}
+    {{--                            <li data-sr-item="movie">--}}
+    {{--                                <a href="#">1h 14m</a>--}}
+    {{--                            </li>--}}
+    {{--                        </ul>--}}
+    {{--                    </div>--}}
+    {{--                    <p class="flq-color-opacity flq-color-text" data-sr-item="movie"> After faking his death, a tech billionaire recruits a team of international operatives for a bold and bloody mission to take down a brutal dictator. </p>--}}
+    {{--                    <div>--}}
+    {{--                        <div class="row g-4">--}}
+    {{--                            <div class="col-auto" data-sr-item="movie">--}}
+    {{--                                <span class="badge badge-white badge-translucent flq-color-title">18+</span>--}}
+    {{--                            </div>--}}
+    {{--                            <div class="col-auto" data-sr-item="movie">--}}
+    {{--                                <a class="btn btn-link" href="{{route('movie', $movie->id)}}">More Details</a>--}}
+    {{--                            </div>--}}
+    {{--                            <div class="col-auto" data-sr-item="movie">--}}
+    {{--                                <a class="btn btn-link" href="https://www.youtube.com/watch?v=CaimKeDcudo&ab_channel=WaltDisneyAnimationStudios" data-fancybox>Watch Trailer</a>--}}
+    {{--                            </div>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="col-12 col-lg-7" data-sr data-sr-delay="200" data-sr-duration="1500" data-sr-distance="10">--}}
+    {{--                    <div class="card flq-card-image flq-card-image-link--}}
+    {{--        flq-card-image-play">--}}
+    {{--                        <a href="https://www.youtube.com/watch?v=CaimKeDcudo&amp;ab_channel=WaltDisneyAnimationStudios" class="card-image" data-fancybox>--}}
+    {{--                                    <span class="flq-image flq-responsive">--}}
+    {{--                                        <img src="{{url('/')}}/front/assets/images/movies/movie-2-1290x1290.jpg" alt="">--}}
+    {{--                                    </span>--}}
+    {{--                        </a>--}}
+    {{--                        <div class="card-body">--}}
+    {{--                                    <span class="btn btn-xl btn-round btn-play btn-glass btn-icon-md">--}}
+    {{--                                        <span class="btn-play-progress">--}}
+    {{--                                            <svg>--}}
+    {{--                                                <circle stroke="currentColor" r="0" fill="none" />--}}
+    {{--                                            </svg>--}}
+    {{--                                        </span>--}}
+    {{--                                        <span class="btn-icon">--}}
+    {{--                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+    {{--                                                <path d="M8 19L19 12L8 5V19Z" fill="currentColor" />--}}
+    {{--                                            </svg>--}}
+    {{--                                        </span>--}}
+    {{--                                    </span>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+    <div class="flq-swiper-wrapper my-7" data-sr="new-releases" data-sr-interval="100" data-sr-duration="1000" data-sr-distance="10">
+        <div class="container mb-5" data-sr-item="new-releases">
+            <h2>Best Serials</h2>
+        </div>
+        <div class="swiper flq-swiper-effect-touch" data-sr-item=new-releases data-buttons=true data-pagination-custom=true data-gap=30 data-speed=800 data-touch-ratio=0.8 data-slides=1, data-breakpoints=636:2,1072:3,1280:4>
+            <div class="swiper-container container">
+                <div class="swiper-wrapper">
+                    @foreach($shows as $show)
+                        @if($show->best_serial == 1)
+                            <div class="swiper-slide">
+                                <div class="card flq-card-blog">
+                                    <div class="card-img-wrap">
+                                        <a href="{{route('show', $show->id)}}">
+                                                    <span class="flq-image flq-rounded-xl flq-responsive flq-responsive-sm-3x4">
+                                                        <img src="{{$show->getFirstMediaUrl('thumbnail')}}" alt="">
+                                                    </span>
+                                            {{--                                            <span class="card-badge badge badge-dark badge-glass flq-color-white">8.4</span>--}}
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="{{route('show', $show->id)}}">{{$show->title}}</a></h5>
+                                        <div class="flq-meta flq-meta-sm">
+                                            <ul>
+                                                <li>
+                                                    <a href="" class="card-year">{{$show->year}}</a>
+                                                </li>
+                                                @foreach($show->genres as $genre)
+                                                    <li>
+                                                        <a href="#" class="card-category">{{$genre->name}}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <div class="row align-items-center justify-content-between gx-5">
+                <div class="col-auto" data-sr-item="new-releases">
+                    <div class="flq-swiper-pagination-custom"></div>
+                </div>
+                <div class="col d-none d-sm-block" data-sr-item="new-releases">
+                    <hr />
+                </div>
+                <div class="col-auto" data-sr-item="new-releases">
+                    <div class="
+            flq-swiper-button-prev
+            btn btn-sm btn-dark btn-active btn-square btn-icon-sm
+            me-1
+          " data-sr-item="related">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="
+            flq-swiper-button-next
+            btn btn-sm btn-dark btn-active btn-square btn-icon-sm
+          " data-sr-item="related">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-7 overflow-hidden flq-background flq-background-color-100" data-sr="features" data-sr-interval="100" data-sr-duration="1000" data-sr-distance="10">
+        <div class="flq-background-shape">
+            <div data-rellax data-rellax-speed="1" class="mt-auto">
+                <svg class="flq-translate-y50 ms-n7" width="866" height="831" viewBox="0 0 866 831" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M323.654 829.93C224.153 816.108 227.515 661.483 166.991 581.373C117.182 515.444 16.5101 485.726 2.15912 404.394C-12.2526 322.718 48.441 248.437 96.2908 180.687C138.901 120.355 193.017 70.7174 259.952 39.3885C326.181 8.38988 399.582 -9.42614 471.263 5.18105C541.916 19.579 590.604 76.5775 649.113 118.693C724.145 172.702 839.74 196.401 861.604 286.155C883.301 375.219 810.521 461.538 749.243 529.731C697.595 587.206 611.836 589.844 548.676 634.395C465.428 693.116 424.619 843.956 323.654 829.93Z" fill="#fff" fill-opacity="0.02" />
+                </svg>
+            </div>
+            <div data-rellax data-rellax-speed="-1" class="ms-auto">
+                <svg class="flq-translate-yn50 mt-n7 ms-7" width="782" height="865" viewBox="0 0 782 865" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M755.116 831.212C680.566 911.828 543.954 812.208 434.284 816.447C344.028 819.936 254.487 891.671 172.561 853.73C90.2879 815.629 61.5615 714.78 30.6714 629.531C3.16372 553.617 -7.56424 474.065 6.13963 394.452C19.6991 315.678 49.5645 238.707 107.441 183.536C164.489 129.156 246.033 121.094 320.36 94.9246C415.677 61.3647 509.14 -27.5167 603.314 8.94621C696.764 45.1286 728.741 164.34 751.641 261.91C770.941 344.146 719.74 422.719 720.256 507.206C720.936 618.565 830.763 749.41 755.116 831.212Z" fill="#fff" fill-opacity="0.02" />
+                </svg>
+            </div>
+        </div>
+{{--        <div class="container">--}}
+{{--            <div class="row gy-5 gx-6">--}}
+{{--                <div class="col-lg-4">--}}
+{{--                    <span class="flq-subtitle badge" data-sr-item="features">Experience</span>--}}
+{{--                    <h2 class="h1" data-sr-item="features"> Signs dry lesser bearing own night itself in </h2>--}}
+{{--                </div>--}}
+{{--                <div class="col-lg-8">--}}
+{{--                    <div class="row g-6">--}}
+{{--                        <div class="col-12 col-sm-6" data-sr-item="features">--}}
+{{--                            <div class="card flq-card-feature">--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <div class="card-icon">--}}
+{{--                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                            <path d="M21.25 22.75H21.2589M16.7857 8.75H25.7143C26.7005 8.75 27.5 9.5335 27.5 10.5V24.5C27.5 25.4665 26.7005 26.25 25.7143 26.25H16.7857C15.7995 26.25 15 25.4665 15 24.5V10.5C15 9.5335 15.7995 8.75 16.7857 8.75Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />--}}
+{{--                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 5.55556C3.75 5.29278 3.98494 5 4.375 5H19.375C19.7651 5 20 5.29278 20 5.55556V6.25H22.5V5.55556C22.5 3.82397 21.056 2.5 19.375 2.5H4.375C2.69399 2.5 1.25 3.82397 1.25 5.55556V14.5833C1.25 16.3149 2.69399 17.6389 4.375 17.6389H10.625V18.75H8.125C7.43464 18.75 6.875 19.3096 6.875 20C6.875 20.6904 7.43464 21.25 8.125 21.25H11.875H12.5V15.1389H11.875H4.375C3.98494 15.1389 3.75 14.8461 3.75 14.5833V5.55556Z" fill="currentColor" />--}}
+{{--                                        </svg>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="card-title h5">Multi Platform</div>--}}
+{{--                                    <p>Let a beginning place dry stars appear seasons winged said whales creature there darkness be dry. Itself let morning fourth.</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-12 col-sm-6" data-sr-item="features">--}}
+{{--                            <div class="card flq-card-feature">--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <div class="card-icon">--}}
+{{--                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                            <path d="M6.25 21.25H5C4.33696 21.25 3.70107 20.9866 3.23223 20.5178C2.76339 20.0489 2.5 19.413 2.5 18.75V6.25C2.5 5.58696 2.76339 4.95107 3.23223 4.48223C3.70107 4.01339 4.33696 3.75 5 3.75H25C25.663 3.75 26.2989 4.01339 26.7678 4.48223C27.2366 4.95107 27.5 5.58696 27.5 6.25V18.75C27.5 19.413 27.2366 20.0489 26.7678 20.5178C26.2989 20.9866 25.663 21.25 25 21.25H23.75" stroke="#FAFAFA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />--}}
+{{--                                            <path d="M15 18.75L21.25 26.25H8.75L15 18.75Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />--}}
+{{--                                        </svg>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="card-title h5">4k Streams</div>--}}
+{{--                                    <p>Let a beginning place dry stars appear seasons winged said whales creature there darkness be dry. Itself let morning fourth.</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-12 col-sm-6" data-sr-item="features">--}}
+{{--                            <div class="card flq-card-feature">--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <div class="card-icon">--}}
+{{--                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                            <path d="M10.0962 21.1143L15.0025 26M15.0025 26L19.9087 21.1143M15.0025 26V15.0072M25.8949 22.4456C26.9613 21.6988 27.7609 20.6332 28.1779 19.4032C28.5948 18.1732 28.6073 16.8429 28.2136 15.6054C27.8198 14.3678 27.0403 13.2874 25.9882 12.5209C24.9361 11.7545 23.666 11.3418 22.3624 11.3428H20.817C20.4481 9.91113 19.7578 8.58145 18.7982 7.45387C17.8386 6.32629 16.6346 5.43018 15.2769 4.83302C13.9192 4.23586 12.4431 3.95319 10.9598 4.00631C9.4765 4.05943 8.02463 4.44695 6.71349 5.13969C5.40236 5.83243 4.26612 6.81234 3.39031 8.00565C2.5145 9.19896 1.92196 10.5746 1.65728 12.0289C1.3926 13.4833 1.46268 14.9785 1.86226 16.402C2.26183 17.8255 2.98048 19.1401 3.96411 20.247" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />--}}
+{{--                                        </svg>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="card-title h5">Watch Offline</div>--}}
+{{--                                    <p>Let a beginning place dry stars appear seasons winged said whales creature there darkness be dry. Itself let morning fourth.</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-12 col-sm-6" data-sr-item="features">--}}
+{{--                            <div class="card flq-card-feature">--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <div class="card-icon">--}}
+{{--                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                            <path d="M15 27.5C15 27.5 25 22.5 25 15V6.25L15 2.5L5 6.25V15C5 22.5 15 27.5 15 27.5Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />--}}
+{{--                                        </svg>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="card-title h5">Secure</div>--}}
+{{--                                    <p>Let a beginning place dry stars appear seasons winged said whales creature there darkness be dry. Itself let morning fourth.</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+    </div>
+{{--    <div class="container my-7" data-sr="online-streaming" data-sr-interval="100" data-sr-duration="1000" data-sr-distance="10">--}}
+{{--        <div class="text-center mb-5">--}}
+{{--            <span class="flq-subtitle badge" data-sr-item="online-streaming">Online Streaming</span>--}}
+{{--            <h2 data-sr-item="online-streaming">Watch Shows Online</h2>--}}
+{{--        </div>--}}
+{{--        <div class="row gy-5 justify-content-center">--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-1-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">7.2</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Believe</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2021</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Romance</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-2-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">6.9</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Ghost</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2019</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Horror</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-3-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">6.2</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Busanhaeng</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2016</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Adventure</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-4-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">7.6</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">The Ultimate Wave</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2018</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Comedy</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-5-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">7.8</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#}">Traveler</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2021</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Adventure</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-6-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">9.0</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#}">Spirit</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2014</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Drama</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-7-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">6.0</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Everest</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2000</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Action</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-8-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">6.2</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Sniper</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2015</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">War</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-9-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">7.1</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Life of Pi</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2019</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Drama</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-10-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">6.7</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Freedom Writers</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2017</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Crime</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-11-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">6.3</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Grind</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2003</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Action</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" data-sr-item="online-streaming">--}}
+{{--                <div class="card flq-card-blog">--}}
+{{--                    <div class="card-img-wrap">--}}
+{{--                        <a href="#">--}}
+{{--                                    <span class="flq-image flq-rounded-lg--}}
+{{--      flq-responsive flq-responsive-sm-3x4">--}}
+{{--                                        <img src="{{url('/')}}/front/assets/images/tv-shows/show-12-390x440.jpg" alt="">--}}
+{{--                                    </span>--}}
+{{--                            <span class="card-badge badge badge-dark badge-glass flq-color-white badge-sm">8.6</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="card-title h6"><a href="#">Interstellar</a></h5>--}}
+{{--                        <div class="flq-meta flq-meta-sm">--}}
+{{--                            <ul>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-year">2014</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="card-category">Adventure</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="text-center mt-5" data-sr-item="online-streaming">--}}
+{{--            <a href="tv-shows.html" class="btn">Browse All</a>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+    <div class="py-7" style="background-image: linear-gradient(95.92deg, #bc2fb2 0%, #f55267 49.13%, #feae71 100%);">
+        <div class="container text-center my-6" data-sr="start-30-days" data-sr-interval="100" data-sr-duration="1000" data-sr-distance="10">
+            <h1 class="display-1 mb-4" data-sr-item="start-30-days"> Available on Web,<br />Roku, and Fire Tv. </h1>
+            <div class="row justify-content-center g-3">
+                <img src="{{url('/')}}/roku.png" style="width: 400px" alt="">
+{{--                <div class="col-12 col-sm-auto" data-sr-item="start-30-days">--}}
+{{--                    <a href="#" class="btn btn-block btn-black btn-glass btn-icon-xl">--}}
+{{--                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                            <path d="M15.0728 5.4325C14.9798 5.5048 13.348 6.424 13.348 8.4689C13.348 10.834 15.4239 11.6706 15.4859 11.6912C15.4756 11.7428 15.1554 12.8376 14.3911 13.953C13.7095 14.9342 12.9968 15.9153 11.9124 15.9153C10.828 15.9153 10.5491 15.2853 9.29942 15.2853C8.08072 15.2853 7.64692 15.936 6.65542 15.936C5.66392 15.936 4.97192 15.0271 4.17672 13.9117C3.25752 12.6 2.51392 10.5654 2.51392 8.6341C2.51392 5.5357 4.52792 3.8935 6.51082 3.8935C7.56432 3.8935 8.44212 4.5855 9.10312 4.5855C9.73312 4.5855 10.7143 3.8522 11.9123 3.8522C12.3668 3.8523 13.9987 3.8937 15.0728 5.4325ZM11.3444 2.5407C11.8401 1.952 12.1913 1.1361 12.1913 0.3202C12.1913 0.2066 12.181 0.093 12.1603 0C11.3547 0.031 10.3942 0.537101 9.81582 1.2084C9.36142 1.7248 8.93792 2.5407 8.93792 3.367C8.93792 3.4909 8.95862 3.6149 8.96892 3.6562C9.02052 3.6665 9.10322 3.6769 9.18582 3.6769C9.90882 3.6768 10.8176 3.1914 11.3444 2.5407Z" fill="currentColor" />--}}
+{{--                        </svg>--}}
+{{--                        <span class="btn-name"><span class="btn-name-subtitle">Download on the</span>App Store</span>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                <div class="col-12 col-sm-auto" data-sr-item="start-30-days">--}}
+{{--                    <a href="#" class="btn btn-block btn-black btn-glass btn-icon-xl">--}}
+{{--                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7271 6.75078L10.3389 9.00003L12.727 11.2492L14.8516 10.0691C15.7161 9.5889 15.7161 8.41106 14.8516 7.93087L12.7271 6.75078ZM12.0758 6.38901L9.82125 8.51243L3.11301 2.19429C3.5067 1.96008 4.02839 1.91908 4.48726 2.17396L12.0758 6.38901ZM2.62535 2.71016C2.54549 2.86887 2.5 3.0485 2.5 3.24308V14.7569C2.5 14.9515 2.5455 15.1311 2.62538 15.2899L9.30357 9.00003L2.62535 2.71016ZM3.11307 15.8058C3.50675 16.0399 4.02842 16.0809 4.48726 15.826L12.0757 11.611L9.82125 9.48761L3.11307 15.8058Z" fill="currentColor" />--}}
+{{--                        </svg>--}}
+{{--                        <span class="btn-name"><span class="btn-name-subtitle">Get it on</span>Google Play</span>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+            </div>
+        </div>
+    </div>
+
+</div>
+@endsection
