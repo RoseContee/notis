@@ -1,0 +1,15 @@
+@extends('layouts.front')
+@section('content')
+
+    <div class="py-7 flq-background-color-100">
+        <div class="container pt-navbar">
+            <h1 class="display-3 mb-0">Terms Of Use</h1>
+        </div>
+    </div>
+    <div class="content-wrap">
+        <div class="container py-7">
+            <p><strong>Use of this site is provided by Notis Studios subject to the following Terms and Conditions:</strong><br />1. Your use constitutes acceptance of these Terms and Conditions as at the date of your first use of the site.<br />2. Notis Studios reserves the rights to change these Terms and Conditions at any time by posting changes online. Your continued use of this site after changes are posted constitutes your acceptance of this agreement as modified.<br />3. You agree to use this site only for lawful purposes, and in a manner which does not infringe the rights, or restrict, or inhibit the use and enjoyment of the site by any third party.<br />4. This site and the information, names, images, pictures, logos regarding or relating to Notis Studios are provided &ldquo;as is&rdquo; without any representation or endorsement made and without warranty of any kind whether express or implied. In no event will Notis Studios be liable for any damages including, without limitation, indirect or consequential damages, or any damages whatsoever arising from the use or in connection with such use or loss of use of the site, whether in contract or in negligence.<br />5. Notis Studios does not warrant that the functions contained in the material contained in this site will be uninterrupted or error free, that defects will be corrected, or that this site or the server that makes it available are free of viruses or bugs or represents the full functionality, accuracy and reliability of the materials.<br />6. Copyright restrictions: please refer to our Creative Commons license terms governing the use of material on this site.<br />7. Notis Studios takes no responsibility for the content of external Internet Sites.<br />8. Any communication or material that you transmit to, or post on, any public area of the site including any data, questions, comments, suggestions, or the like, is, and will be treated as, non-confidential and non-proprietary information.<br />9. If there is any conflict between these Terms and Conditions and rules and/or specific terms of use appearing on this site relating to specific material then the latter shall prevail.<br />10. These terms and conditions shall be governed and construed in accordance with the laws of Oklahoma and United States. Any disputes shall be subject to the exclusive jurisdiction of the Courts of Oklahoma and United States.<br />11. If these Terms and Conditions are not accepted in full, the use of this site must be terminated immediately.</p>
+        </div>
+    </div>
+
+@endsection
